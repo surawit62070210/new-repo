@@ -214,7 +214,7 @@ router.post("/user/login", async (req, res, next) => {
     const [tokens] = await conn.query("SELECT * FROM tokens WHERE user_id=?", [
       user.id,
     ]);
-    let token = tokens[0].token;
+    let token = tokens[0]?.token;
     if (!token) {
       // Generate and save token into database
       token = generateToken();
