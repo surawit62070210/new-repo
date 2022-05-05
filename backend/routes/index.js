@@ -4,6 +4,7 @@ const pool = require("../config");
 router = express.Router();
 
 router.get("/", async function (req, res, next) {
+  console.log({ res: res, pool: pool });
   try {
     let promotions = "SELECT * FROM promotions;";
     let profile = "SELECT * FROM profile;";
@@ -20,7 +21,6 @@ router.get("/", async function (req, res, next) {
     const [rows5] = await pool.query(product);
     const [rows7] = await pool.query(store);
     const [rows8] = await pool.query(tokens);
-    console.log(await pool.query(promotions));
     return res.json({
       promotions: rows1,
       profile: rows2,
@@ -31,6 +31,7 @@ router.get("/", async function (req, res, next) {
       tokens: rows8,
     });
   } catch (err) {
+    console.error(err.message);
     return res.status(500).json(err);
   }
 });
